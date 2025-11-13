@@ -2,7 +2,7 @@ services:
   api:
     container_name: desafio-avine-api
     build:
-      context: .
+      context: ./api-csharp
       dockerfile: Dockerfile.dev
     ports:
       - "8080:8080"
@@ -16,12 +16,30 @@ services:
     networks:
       - desafioavine
 
+  web:
+    container_name: desafio-avine-web
+    build:
+      context: ./web
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080/api
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - api
+    networks:
+      - desafioavine
+
   mysql:
     image: mysql:8.0
     container_name: desafio-avine-mysql
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=root 
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=tasksdb
       - MYSQL_USER=tasksuser
       - MYSQL_PASSWORD=taskssecret

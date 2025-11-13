@@ -1,28 +1,52 @@
-## Desafio Avine API
+# API - Sistema de Tarefas
 
-### Pré‑requisitos
+API REST desenvolvida em C# (.NET 8) para gerenciamento de tarefas.
 
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/)
+## 🚀 Como executar
 
-> Não é necessário instalar o .NET SDK/Runtime ou MySQL localmente: tudo roda dentro dos contêineres.
-
-### Como executar
+### Com Docker (da raiz do projeto)
 
 ```bash
+# Na raiz do repositório
 docker compose up --build
 ```
 
-Isso irá:
+A API estará disponível em: `http://localhost:8080`
 
-1. Construir a imagem da API com `dockerfile.dev` (multi-stage SDK + runtime).
-2. Subir um contêiner `mysql:8.0` com usuário/senha já configurados.
-3. Inicializar a aplicação ASP.NET em `http://localhost:8080` com Swagger ativo em ambiente de desenvolvimento.
+### Sem Docker
 
-A API aplica automaticamente o `EnsureCreated` no banco ao iniciar, então a base `tasksdb` é criada na primeira execução. Os dados ficam persistidos no volume `mysql-data` definido no `docker-compose.yml`.
+```bash
+cd api-csharp
+dotnet restore
+dotnet run
+```
 
-### Comandos úteis
+> **Nota:** Configure a connection string do MySQL no `appsettings.json`
 
-- Encerrar os serviços: `docker compose down`
-- Encerrar e limpar volumes (inclui apagar dados do MySQL): `docker compose down -v`
-- Consultar logs: `docker compose logs -f api`
+## 📋 Funcionalidades
+
+- Listar todas as tarefas
+- Criar nova tarefa
+- Editar tarefa existente
+- Excluir tarefa
+- Filtrar por status (open/done)
+- Ordenar por título ou data de vencimento
+
+## 🛠️ Tecnologias
+
+- .NET 8
+- Entity Framework Core
+- MySQL
+- Swagger (documentação da API)
+
+## 📍 Endpoints
+
+- `GET /api/Tasks` - Listar tarefas
+- `GET /api/Tasks/{id}` - Obter tarefa específica
+- `POST /api/Tasks` - Criar tarefa
+- `PUT /api/Tasks/{id}` - Atualizar tarefa
+- `DELETE /api/Tasks/{id}` - Excluir tarefa
+
+## 📖 Documentação
+
+Acesse o Swagger em: `http://localhost:8080/swagger`
