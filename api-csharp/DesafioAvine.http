@@ -1,0 +1,37 @@
+@DesafioAvine_HostAddress = http://localhost:8080
+
+### Lista todas as tarefas
+GET {{DesafioAvine_HostAddress}}/api/tasks
+Accept: application/json
+
+###
+
+### Cria uma nova tarefa
+POST {{DesafioAvine_HostAddress}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Reunião com o time",
+  "description": "Alinhar status do sprint",
+  "dueDateUtc": "2025-11-30T12:00:00Z"
+}
+
+###
+
+### Atualiza uma tarefa existente
+PUT {{DesafioAvine_HostAddress}}/api/tasks/1
+Content-Type: application/json
+
+{
+  "title": "Reunião com o time (atualizada)",
+  "description": "Incluir pauta de riscos",
+  "dueDateUtc": "2025-12-01T14:00:00Z",
+  "status": "done"
+}
+
+###
+
+### Remove uma tarefa
+DELETE {{DesafioAvine_HostAddress}}/api/tasks/1
+
+###

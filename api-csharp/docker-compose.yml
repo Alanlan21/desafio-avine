@@ -1,0 +1,46 @@
+services:
+  api:
+    container_name: desafio-avine-api
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=mysql;Port=3306;Database=tasksdb;User=tasksuser;Password=taskssecret;TreatTinyAsBoolean=false;
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - desafioavine
+
+  mysql:
+    image: mysql:8.0
+    container_name: desafio-avine-mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root 
+      - MYSQL_DATABASE=tasksdb
+      - MYSQL_USER=tasksuser
+      - MYSQL_PASSWORD=taskssecret
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - desafioavine
+
+networks:
+  desafioavine:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
