@@ -80,7 +80,7 @@ Usei o modelo clássico com _Controllers_, _Models_, _DTOs_ e _DbContext_. É di
 
 ### Frontend (Next.js + Tailwind)
 
-Usei Next.js pela integração simples com APIs REST e Tailwind pela velocidade e consistência no layout. Acabei ficando numa versão anterior do Tailwind porque a mais nova estava conflitando com dependências do Next.
+Usei Next.js com react pela requisição do desafio e Tailwind pela velocidade e consistência no layout. Acabei ficando numa versão anterior do Tailwind porque a mais nova estava conflitando com dependências do Next.
 
 ### Integração
 
@@ -90,35 +90,6 @@ Configurei a comunicação entre os serviços via variáveis de ambiente. O Next
 
 Decidi não dockerizar essa parte porque o ASP depende do IIS, que só roda direito em ambiente Windows. Ele roda localmente e usa o mesmo banco do container.
 
-## 📸 Screenshots
-
-### Interface Web (Next.js)
-
-#### Lista de Tarefas
-
-![Lista de Tarefas](./docs/images/web-lista.png)
-
-#### Criar Nova Tarefa
-
-![Criar Tarefa](./docs/images/web-criar.png)
-
-#### Editar Tarefa
-
-![Editar Tarefa](./docs/images/web-editar.png)
-
-### Interface ASP Classic
-
-#### Lista de Tarefas
-
-![Lista ASP](./docs/images/asp-lista.png)
-
-#### Formulário de Criação
-
-![Criar ASP](./docs/images/asp-criar.png)
-
-### API - Swagger
-
-![Swagger API](./docs/images/swagger.png)
 
 ## 📋 Funcionalidades
 
