@@ -41,10 +41,12 @@ Acesse:
 
 ```bash
 cd api-csharp
-docker compose up --build
+dotnet run
 ```
 
 A API estará disponível em: `http://localhost:8080`
+
+> **Nota:** Configure a connection string do MySQL no `appsettings.json`
 
 #### 2. Iniciar a Web
 
@@ -88,6 +90,36 @@ Configurei a comunicação entre os serviços via variáveis de ambiente. O Next
 
 Decidi não dockerizar essa parte porque o ASP depende do IIS, que só roda direito em ambiente Windows. Ele roda localmente e usa o mesmo banco do container.
 
+## 📸 Screenshots
+
+### Interface Web (Next.js)
+
+#### Lista de Tarefas
+
+![Lista de Tarefas](./docs/images/web-lista.png)
+
+#### Criar Nova Tarefa
+
+![Criar Tarefa](./docs/images/web-criar.png)
+
+#### Editar Tarefa
+
+![Editar Tarefa](./docs/images/web-editar.png)
+
+### Interface ASP Classic
+
+#### Lista de Tarefas
+
+![Lista ASP](./docs/images/asp-lista.png)
+
+#### Formulário de Criação
+
+![Criar ASP](./docs/images/asp-criar.png)
+
+### API - Swagger
+
+![Swagger API](./docs/images/swagger.png)
+
 ## 📋 Funcionalidades
 
 - ✅ Criar tarefas
@@ -98,26 +130,6 @@ Decidi não dockerizar essa parte porque o ASP depende do IIS, que só roda dire
 - ✅ Filtrar por status
 - ✅ Ordenar por título ou data de vencimento
 
-## 🛠️ Tecnologias
-
-### API
-
-- .NET 8
-- Entity Framework Core
-- MySQL
-- Docker
-
-### Web
-
-- Next.js 15
-- React 19
-- TypeScript
-- Tailwind CSS
-
-### ASP Classic
-
-- VBScript
-- IIS
 
 ## 📖 Documentação
 
