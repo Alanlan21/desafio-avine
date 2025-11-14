@@ -1,8 +1,8 @@
-<%@ Language=VBScript %>
+<%@ Language=VBScript CODEPAGE=65001 %>
 <%
 Option Explicit
-Response.Charset = "UTF-8"
 Response.CodePage = 65001
+Response.Charset = "UTF-8"
 %>
 <!-- #include file="utils.asp" -->
 <%

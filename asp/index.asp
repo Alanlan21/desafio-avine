@@ -1,6 +1,7 @@
-<%@ Language=VBScript %>
+<%@ Language=VBScript CODEPAGE=65001 %>
 <%
 Option Explicit
+Response.CodePage = 65001
 Response.Charset = "UTF-8"
 %>
 <!-- #include file="utils.asp" -->
@@ -118,8 +119,6 @@ End If
                             <option value="desc" <% If orderDir = "desc" Then Response.Write "selected" %>>Decrescente</option>
                         </select>
                     </div>
-                    
-                    <input type="hidden" name="status" value="<%= statusFilter %>">
                 </form>
             </div>
 
@@ -183,7 +182,7 @@ End If
                         taskStatus = ExtractJSONField(taskJson, "status")
                         
                         Dim statusText, statusClass
-                        If taskStatus = "done" Then
+                        If LCase(taskStatus) = "done" Then
                             statusText = "Concluída"
                             statusClass = "status-done"
                         Else
@@ -199,7 +198,7 @@ End If
                             <td class="<%= statusClass %>"><%= statusText %></td>
                             <td class="actions">
                                 <a href="toggle.asp?id=<%= taskId %>&returnUrl=index.asp" class="btn btn-small">
-                                    <% If taskStatus = "done" Then %>Reabrir<% Else %>Concluir<% End If %>
+                                    <% If LCase(taskStatus) = "completed" Then %>Reabrir<% Else %>Concluir<% End If %>
                                 </a>
                                 <a href="edit.asp?id=<%= taskId %>" class="btn btn-small">Editar</a>
                                 <a href="delete.asp?id=<%= taskId %>" class="btn btn-small btn-danger" onclick="return confirm('Deseja realmente excluir esta tarefa?')">Excluir</a>

@@ -27,7 +27,7 @@ export default function Home() {
           </div>
 
           <a
-            href="http://localhost:8081/list.asp"
+            href="http://localhost/avine/index.asp"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 rounded-lg border border-white/60 bg-white/90 px-4 py-2 text-sm font-medium text-avine-green shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-avine-green hover:bg-avine-green hover:text-white hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"

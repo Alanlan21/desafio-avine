@@ -1,6 +1,20 @@
 # ASP Classic - Sistema de Tarefas
 
-Interface web desenvolvida em ASP Classic (VBScript) que consome a API REST.
+Interface web desenvolvida em **ASP Classic (VBScript)** que **consome diretamente a API REST em C#/.NET** através de chamadas HTTP.
+
+## 🎯 Diferencial desta Implementação
+
+⚠️ **IMPORTANTE**: Esta solução **NÃO se conecta diretamente ao banco de dados MySQL**.
+
+Ao invés de criar uma nova conexão ao banco, esta implementação:
+
+- ✅ **Reutiliza completamente a API C#/.NET** já existente
+- ✅ **Faz chamadas HTTP REST** para todos os endpoints (GET, POST, PUT, DELETE)
+- ✅ **Compartilha a mesma lógica de negócio** entre todas as interfaces
+- ✅ **Evita duplicação de código** e regras de validação
+- ✅ **Mantém arquitetura consistente** - uma única fonte de verdade (a API)
+- ✅ **Demonstra integração entre tecnologias legadas e modernas**
+
 
 ## 🚀 Como executar
 
@@ -8,7 +22,7 @@ Interface web desenvolvida em ASP Classic (VBScript) que consome a API REST.
 
 - Windows com IIS instalado
 - ASP Classic habilitado no IIS
-- API rodando em `http://localhost:8080`
+- **API C# rodando em `http://localhost:8080`** (obrigatório!)
 
 ### Configuração
 
@@ -20,7 +34,9 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole, IIS-ASP -A
 
 2. Crie um site no IIS apontando para a pasta `asp/`
 
-3. Acesse: `http://localhost/index.asp`
+3. **Certifique-se que a API está rodando**: `http://localhost:8080/api/tasks`
+
+4. Acesse: `http://localhost/index.asp`
 
 ## 📋 Funcionalidades
 
@@ -47,14 +63,15 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole, IIS-ASP -A
 
 ## 🔌 Integração com a API
 
-Todas as operações fazem chamadas HTTP para a API .NET:
+**Todas as operações fazem chamadas HTTP diretas** para a API .NET rodando em `http://localhost:8080`:
 
-- **GET** `/tasks` - Lista tarefas
-- **GET** `/tasks/{id}` - Obtém tarefa específica
-- **POST** `/tasks` - Cria nova tarefa
-- **PUT** `/tasks/{id}` - Atualiza tarefa
-- **PATCH** `/tasks/{id}/toggle` - Alterna status
-- **DELETE** `/tasks/{id}` - Exclui tarefa
+- **GET** `/api/Tasks` - Lista tarefas (com filtros opcionais: status, orderBy, order)
+- **GET** `/api/Tasks/{id}` - Obtém tarefa específica
+- **POST** `/api/Tasks` - Cria nova tarefa
+- **PUT** `/api/Tasks/{id}` - Atualiza tarefa
+- **DELETE** `/api/Tasks/{id}` - Exclui tarefa
+
+**Implementação técnica**: Utiliza `MSXML2.ServerXMLHTTP` para fazer requisições HTTP e parsear respostas JSON através de RegEx (função `ExtractJSON` em `utils.asp`).
 
 ### Formato JSON
 
@@ -71,23 +88,41 @@ Todas as operações fazem chamadas HTTP para a API .NET:
 
 ## 🛠️ Arquitetura
 
-### utils.asp
-
-Contém funções auxiliares:
-
-- `CallAPI(method, endpoint, jsonBody)` - Faz requisições HTTP
-- `HTMLEncode(text)` - Previne XSS
-- `FormatDate(isoDate)` - Formata datas
-- `GetQueryString(param, default)` - Obtém parâmetros da URL
-- `ShowMessage(type, text)` - Exibe mensagens de feedback
-
 ### Fluxo de Dados
 
 ```
-[Navegador] <--> [ASP Classic] <--> [API .NET] <--> [MySQL]
+[Navegador] <--> [ASP Classic] <-HTTP REST--> [API .NET] <--> [MySQL]
 ```
 
-A aplicação ASP **NÃO** acessa o banco de dados diretamente. Todas as operações passam pela API REST.
+⚠️ **A aplicação ASP NÃO acessa o banco de dados diretamente**. Todas as operações passam pela API REST, garantindo:
+- Consistência de dados
+- Validações centralizadas
+- Reutilização de lógica de negócio
+- Facilidade de manutenção
+
+### utils.asp - Funções Principais
+
+**CallAPI(method, endpoint, jsonBody)** - Executa requisições HTTP
+```vbscript
+Function CallAPI(method, endpoint, jsonBody)
+    Set http = Server.CreateObject("MSXML2.ServerXMLHTTP.6.0")
+    url = API_BASE_URL & endpoint  ' http://localhost:8080/api/Tasks
+    http.Open method, url, False
+    http.setRequestHeader "Content-Type", "application/json"
+    http.Send jsonBody
+    ' Retorna Dictionary com Success e Data
+End Function
+```
+
+**ExtractJSON(json, field)** - Parseia JSON com RegEx (sem bibliotecas externas)
+
+**JSONEncode(text)** - Escapa caracteres especiais para JSON válido
+
+**HTMLEncode(text)** - Previne XSS em outputs HTML
+
+**FormatDate(isoDate)** - Formata datas ISO para dd/mm/yyyy
+
+**GetQueryString(param, default)** - Obtém parâmetros da URL com fallback
 
 ## ⚠️ Observações
 

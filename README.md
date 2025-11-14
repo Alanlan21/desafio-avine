@@ -2,6 +2,14 @@
 
 Sistema completo de gerenciamento de tarefas com três interfaces diferentes: Web moderna (Next.js), ASP Classic e uma API REST em C#.
 
+## 🎥 Demonstração
+
+Veja o sistema funcionando na prática com todas as interfaces integradas:
+
+[![Demonstração do Sistema](https://img.youtube.com/vi/IUrwFSHEzDA/maxresdefault.jpg)](https://youtu.be/IUrwFSHEzDA)
+
+**[▶️ Assistir demonstração completa no YouTube](https://youtu.be/IUrwFSHEzDA)**
+
 ## 📁 Estrutura do Projeto
 
 ```
